@@ -1,0 +1,329 @@
+/* Warcraft — carved gold window frame, panel trims, scroll toasts, transitions */
+
+/* ── Window frame (mounted into host slots) ────────────────────── */
+
+.wc-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 2px solid #000;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.55);
+}
+
+.wc-frame-trim {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.95;
+}
+
+.wc-frame-trim--h {
+  left: 26px;
+  right: 26px;
+  height: 6px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #5c431a 0 14px,
+      #8f6b24 14px 16px,
+      #3d2e12 16px 30px
+    );
+  box-shadow:
+    inset 0 1px 0 #d4a853,
+    inset 0 -1px 0 #000;
+}
+
+.wc-frame-trim--h.top {
+  top: 0;
+}
+
+.wc-frame-trim--h.bottom {
+  bottom: 0;
+}
+
+.wc-frame-trim--v {
+  top: 26px;
+  bottom: 26px;
+  width: 6px;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #5c431a 0 14px,
+      #8f6b24 14px 16px,
+      #3d2e12 16px 30px
+    );
+  box-shadow:
+    inset 1px 0 0 #d4a853,
+    inset -1px 0 0 #000;
+}
+
+.wc-frame-trim--v.left {
+  left: 0;
+}
+
+.wc-frame-trim--v.right {
+  right: 0;
+}
+
+.wc-corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.8));
+}
+
+.wc-corner-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wc-corner--tl {
+  top: -2px;
+  left: -2px;
+}
+
+.wc-corner--tr {
+  top: -2px;
+  right: -2px;
+  transform: rotate(90deg);
+}
+
+.wc-corner--bl {
+  bottom: -2px;
+  left: -2px;
+  transform: rotate(-90deg);
+}
+
+.wc-corner--br {
+  bottom: -2px;
+  right: -2px;
+  transform: rotate(180deg);
+}
+
+/* Header banner glint */
+.wc-header {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+.wc-header-glint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  top: 0;
+  background: linear-gradient(90deg, transparent, #d4a853, #fbbf24, #d4a853, transparent);
+  opacity: 0.45;
+  animation: wc-glint 6s linear infinite;
+}
+
+.wc-rail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+@keyframes wc-glint {
+  0% {
+    transform: translateX(-25%);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateX(25%);
+    opacity: 0.15;
+  }
+}
+
+/* Panel corner studs (injected on host panels) */
+body.appearance-skin-active .wc-panel {
+  position: relative !important;
+}
+
+body.appearance-skin-active .wc-panel > .wc-corner {
+  width: 26px;
+  height: 26px;
+  z-index: 6;
+}
+
+/* ── Scroll toast (warcraftcn Toast, vanilla port) ─────────────── */
+
+.wc-toast-root {
+  position: fixed;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9995;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.wc-toast {
+  display: flex;
+  align-items: center;
+  height: 104px;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6));
+}
+
+.wc-toast-handle {
+  width: 20px;
+  height: 104px;
+  z-index: 2;
+  flex-shrink: 0;
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-handle.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.wc-toast-handle--flip {
+  transform: scaleX(-1);
+}
+
+.wc-toast-center {
+  width: 0;
+  height: 96px;
+  margin: 0 -8px;
+  z-index: 1;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-content.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transition: width 0.8s cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.wc-toast.is-open .wc-toast-center {
+  width: 264px;
+}
+
+.wc-toast-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 26px;
+  text-align: center;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #211306;
+  opacity: 0;
+  transform: scale(0.92);
+  filter: blur(4px);
+  transition: opacity 0.5s ease 0.25s, transform 0.5s ease 0.25s, filter 0.5s ease 0.25s;
+  overflow: hidden;
+}
+
+.wc-toast.is-open .wc-toast-text {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+.wc-toast--success .wc-toast-text {
+  color: #14532d;
+}
+
+.wc-toast--error .wc-toast-text {
+  color: #7f1d1d;
+}
+
+/* Faction scroll art */
+body[data-wc-faction="human"] .wc-toast-handle {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-handle-human.png");
+}
+body[data-wc-faction="human"] .wc-toast-center {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-content-human.webp");
+}
+body[data-wc-faction="orc"] .wc-toast-handle {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-handle-orc.png");
+}
+body[data-wc-faction="orc"] .wc-toast-center {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-content-orc.webp");
+}
+body[data-wc-faction="elf"] .wc-toast-handle {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-handle-elf.png");
+}
+body[data-wc-faction="elf"] .wc-toast-center {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-content-elf.webp");
+}
+body[data-wc-faction="undead"] .wc-toast-handle {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-handle-undead.png");
+}
+body[data-wc-faction="undead"] .wc-toast-center {
+  background-image: url("/plugin-ui/warcraft/ui/assets/toast/scroll-content-undead.webp");
+}
+
+/* ── Tab / settings transitions (parchment turn) ───────────────── */
+
+body.appearance-skin-active .wc-anim-host {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+body.appearance-skin-active .wc-panel-clone,
+.wc-panel-clone {
+  position: fixed;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+  background: hsl(35, 18%, 5%);
+  animation: wc-panel-out 0.16s ease-in forwards;
+}
+
+body.appearance-skin-active .wc-panel-in {
+  animation: wc-panel-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes wc-panel-out {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: sepia(0) brightness(1);
+  }
+  100% {
+    transform: translateY(14px) scale(0.985);
+    opacity: 0;
+    filter: sepia(0.5) brightness(1.3);
+  }
+}
+
+@keyframes wc-panel-in {
+  0% {
+    transform: translateY(-14px) scale(0.985);
+    opacity: 0;
+    filter: sepia(0.5) brightness(1.3);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: sepia(0) brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-header-glint,
+  .wc-panel-clone,
+  body.appearance-skin-active .wc-panel-in {
+    animation: none !important;
+  }
+
+  .wc-toast-center,
+  .wc-toast-text {
+    transition: none !important;
+  }
+}

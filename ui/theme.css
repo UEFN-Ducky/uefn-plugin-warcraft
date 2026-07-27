@@ -1,0 +1,1120 @@
+/* Warcraft — full-app fantasy war-room restyle (plugin-only).
+   Every visual ported from warcraftcn-ui (MIT): nine-slice webp frames,
+   Cinzel type, faction art, gem radios, rarity tooltips, glyph spinner.
+   Assets served from /plugin-ui/warcraft/ui/… */
+
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/plugin-ui/warcraft/ui/fonts/cinzel-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/plugin-ui/warcraft/ui/fonts/cinzel-700.woff2") format("woff2");
+}
+
+body.appearance-skin-active,
+body.appearance-skin-active .app-container {
+  --wc-ink: #211306;
+  --wc-parchment: #f3e7c4;
+  --wc-parchment-dim: #cdb98c;
+  --wc-gold: #d4a853;
+  --wc-gold-hi: #fbbf24;
+  --wc-gold-deep: #8f6b24;
+  --wc-stone: hsl(35, 10%, 12%);
+  --wc-stone-deep: hsl(35, 15%, 8%);
+  --wc-stone-void: hsl(35, 18%, 5%);
+  --wc-border-gold: hsl(45, 60%, 35%);
+  --wc-amber-100: #fef3c7;
+  --wc-amber-200: #fde68a;
+  --wc-amber-400: #fbbf24;
+  --wc-green: #4ade80;
+  --wc-red: #ef4444;
+  --wc-blue: #5a8ac4;
+  --wc-purple: #a68ac4;
+  --wc-teal: #5aaaa5;
+  --wc-font: "Cinzel", Georgia, "Times New Roman", serif;
+}
+
+/* ── Global canvas — dark stone hall ───────────────────────────── */
+
+body.appearance-skin-active {
+  background-color: var(--wc-stone-void) !important;
+  background-image:
+    radial-gradient(circle at 50% 38%, rgba(64, 46, 20, 0.5) 0%, rgba(20, 13, 5, 0.95) 68%, rgba(10, 7, 3, 1) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+  background-blend-mode: overlay;
+  color: var(--wc-parchment);
+  font-family: var(--wc-font);
+}
+
+body.appearance-skin-active .app-container,
+body.appearance-skin-active .workspace-dock-layout,
+body.appearance-skin-active .workspace-dock-center,
+body.appearance-skin-active .chat-view-layout,
+body.appearance-skin-active .focus-editor-area {
+  background: transparent !important;
+}
+
+/* Warm candlelight vignette */
+body.appearance-skin-active::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.5;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    transparent 55%,
+    rgba(8, 5, 2, 0.55) 100%
+  );
+}
+
+/* Kill host glass */
+body.appearance-skin-active .glass-panel,
+body.appearance-skin-active .app-header.glass-panel,
+body.appearance-skin-active .sidebar-stacked-panel,
+body.appearance-skin-active .dock-rail,
+body.appearance-skin-active .workspace-dock-layout .glass-panel {
+  background: var(--wc-stone-deep) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Cinzel everywhere except code surfaces */
+body.appearance-skin-active button,
+body.appearance-skin-active input:not([type="checkbox"]):not([type="radio"]),
+body.appearance-skin-active select,
+body.appearance-skin-active label,
+body.appearance-skin-active .sidebar-section-header,
+body.appearance-skin-active .settings-view-sidebar-tab,
+body.appearance-skin-active .settings-view-header-tab,
+body.appearance-skin-active .editor-tab,
+body.appearance-skin-active .app-header,
+body.appearance-skin-active .tool-card,
+body.appearance-skin-active .modal {
+  font-family: var(--wc-font) !important;
+}
+
+body.appearance-skin-active .monaco-editor,
+body.appearance-skin-active textarea.chat-pane-textarea,
+body.appearance-skin-active code,
+body.appearance-skin-active pre {
+  font-family: var(--font-mono, Consolas, monospace) !important;
+}
+
+/* ── Card panels — warcraftcn Card (card-bg.webp, slice 24 fill) ─ */
+
+body.appearance-skin-active .tool-card,
+body.appearance-skin-active .card,
+body.appearance-skin-active .chat-shortcut-card,
+body.appearance-skin-active .chat-message-card,
+body.appearance-skin-active .store-card {
+  background: transparent !important;
+  border: 14px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/card-bg.webp") 24 fill stretch !important;
+  border-radius: 0 !important;
+  color: var(--wc-parchment) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+body.appearance-skin-active .tool-card:hover,
+body.appearance-skin-active .store-card:hover,
+body.appearance-skin-active .chat-shortcut-card:hover {
+  filter: brightness(1.12);
+}
+
+body.appearance-skin-active .message-bubble {
+  background: rgba(33, 22, 9, 0.82) !important;
+  border: 1px solid rgba(154, 111, 47, 0.45) !important;
+  border-radius: 6px !important;
+  color: var(--wc-parchment) !important;
+}
+
+/* Modals + hulls — heavy card frame */
+body.appearance-skin-active .modal {
+  background: transparent !important;
+  border: 20px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/card-bg.webp") 24 fill stretch !important;
+  border-radius: 0 !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8) !important;
+  color: var(--wc-parchment) !important;
+}
+
+/* Panel shells — dark stone with gold trim (frame corners come from skin.js) */
+body.appearance-skin-active .dock-rail-shell,
+body.appearance-skin-active .editor-group,
+body.appearance-skin-active .chat-column,
+body.appearance-skin-active .settings-view-sidebar-shell,
+body.appearance-skin-active .settings-view-main {
+  background: var(--wc-stone-deep) !important;
+  border: 1px solid rgba(154, 111, 47, 0.5) !important;
+  border-radius: 4px !important;
+  box-shadow:
+    inset 0 0 24px rgba(0, 0, 0, 0.75),
+    0 8px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.appearance-skin-active .dock-rail-shell,
+body.appearance-skin-active .dock-rail-shell .dock-rail,
+body.appearance-skin-active .dock-rail-shell .dock-rail-inner,
+body.appearance-skin-active .dock-rail-shell .dock-rail-family-stack,
+body.appearance-skin-active .dock-rail-shell .dock-rail-family-section,
+body.appearance-skin-active .dock-rail-shell .dock-rail-sidebar-section,
+body.appearance-skin-active .dock-rail-shell .dock-rail-tab-stack,
+body.appearance-skin-active .dock-rail-shell .dock-rail-tab-bodies,
+body.appearance-skin-active .dock-rail-shell .sidebar-panel-content,
+body.appearance-skin-active .dock-rail-shell .sidebar-stacked-panel,
+body.appearance-skin-active .dock-rail-shell .ducky-tree,
+body.appearance-skin-active .dock-rail-shell .file-tree,
+body.appearance-skin-active .dock-rail-shell .file-tree-root {
+  background: transparent !important;
+}
+
+/* Gold seam where rails meet center */
+body.appearance-skin-active .dock-rail-shell--left::after,
+body.appearance-skin-active .dock-rail-shell--right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  pointer-events: none;
+  z-index: 7;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(212, 168, 83, 0.55) 15%,
+    rgba(212, 168, 83, 0.55) 85%,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(212, 168, 83, 0.4);
+}
+
+body.appearance-skin-active .dock-rail-shell--left {
+  position: relative;
+}
+body.appearance-skin-active .dock-rail-shell--right {
+  position: relative;
+}
+body.appearance-skin-active .dock-rail-shell--left::after {
+  right: -2px;
+}
+body.appearance-skin-active .dock-rail-shell--right::after {
+  left: -2px;
+}
+
+/* Content wells — aged parchment-dark reading surface */
+body.appearance-skin-active .editor-group-body,
+body.appearance-skin-active .settings-view-content,
+body.appearance-skin-active .chat-pane-content,
+body.appearance-skin-active .sidebar-panel-content,
+body.appearance-skin-active .dock-rail-tab-bodies {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(64, 46, 20, 0.22), transparent 60%),
+    var(--wc-stone-void) !important;
+  box-shadow:
+    inset 0 0 26px rgba(0, 0, 0, 0.8),
+    inset 0 2px 8px rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid rgba(90, 64, 26, 0.5) !important;
+  border-radius: 3px !important;
+  margin: 2px;
+}
+
+/* ── Header — carved lintel ────────────────────────────────────── */
+
+body.appearance-skin-active .app-header,
+body.appearance-skin-active .app-header.glass-panel {
+  position: relative;
+  min-height: 40px !important;
+  height: auto !important;
+  background:
+    linear-gradient(180deg, hsl(35, 14%, 16%) 0%, hsl(35, 15%, 9%) 60%, hsl(35, 18%, 6%) 100%) !important;
+  border-bottom: 2px solid #000 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(212, 168, 83, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Gold filigree line under the header */
+body.appearance-skin-active .app-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  pointer-events: none;
+  z-index: 6;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 168, 83, 0.7) 20%,
+    rgba(251, 191, 36, 0.7) 50%,
+    rgba(212, 168, 83, 0.7) 80%,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(212, 168, 83, 0.4);
+}
+
+body.appearance-skin-active .app-header-project-label {
+  color: var(--wc-amber-200) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.45);
+}
+
+body.appearance-skin-active .app-header-center {
+  background: rgba(20, 13, 5, 0.85) !important;
+  border: 1px solid rgba(154, 111, 47, 0.55) !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
+  min-height: 24px;
+  padding: 0 6px;
+}
+
+/* ── Buttons — warcraftcn Button (button-bg.webp nine-slice) ───── */
+
+body.appearance-skin-active button,
+body.appearance-skin-active .icon-btn,
+body.appearance-skin-active .settings-btn,
+body.appearance-skin-active .btn,
+body.appearance-skin-active .btn-primary,
+body.appearance-skin-active .btn-secondary,
+body.appearance-skin-active .store-card-btn,
+body.appearance-skin-active .modal-confirm-btn,
+body.appearance-skin-active .modal-cancel-btn,
+body.appearance-skin-active .chat-pane-send-btn,
+body.appearance-skin-active .chat-pane-stop-btn,
+body.appearance-skin-active .connection-status-btn,
+body.appearance-skin-active .window-control-btn,
+body.appearance-skin-active .plugin-header-btn,
+body.appearance-skin-active .sidebar-toggle-btn,
+body.appearance-skin-active .app-header-nav-btn,
+body.appearance-skin-active .app-header-workflow-btn,
+body.appearance-skin-active .editor-tab-btn,
+body.appearance-skin-active .editor-tab-bar-menu-btn,
+body.appearance-skin-active .settings-view-header-action-btn,
+body.appearance-skin-active .settings-view-back-btn,
+body.appearance-skin-active .app-header-trailing button,
+body.appearance-skin-active .app-header button.app-header-vim-btn,
+body.appearance-skin-active .app-header button.app-header-save-btn,
+body.appearance-skin-active header.app-header.glass-panel button.app-header-vim-btn.icon-btn,
+body.appearance-skin-active header.app-header.glass-panel button.app-header-save-btn {
+  position: relative !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 5px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/button-bg.webp") 16 fill stretch !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  font-family: var(--wc-font) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55) !important;
+  transition: filter 0.1s, transform 0.1s, box-shadow 0.1s !important;
+}
+
+/* Small square icon buttons get the sm plate */
+body.appearance-skin-active .icon-btn,
+body.appearance-skin-active .window-control-btn,
+body.appearance-skin-active .connection-status-btn,
+body.appearance-skin-active .plugin-header-btn,
+body.appearance-skin-active .sidebar-toggle-btn,
+body.appearance-skin-active .app-header-nav-btn,
+body.appearance-skin-active .editor-tab-bar-menu-btn {
+  border-width: 4px !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/button-bg-sm.webp") 16 fill stretch !important;
+  min-width: 28px !important;
+  min-height: 26px !important;
+  padding: 3px 6px !important;
+}
+
+body.appearance-skin-active button:hover,
+body.appearance-skin-active .icon-btn:hover,
+body.appearance-skin-active .app-header-trailing button:hover:not(:disabled),
+body.appearance-skin-active .window-control-btn:hover,
+body.appearance-skin-active .connection-status-btn:hover {
+  filter: brightness(1.18);
+  color: #fff !important;
+}
+
+body.appearance-skin-active button:active,
+body.appearance-skin-active .icon-btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.78);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+}
+
+body.appearance-skin-active button:disabled {
+  opacity: 0.5 !important;
+  filter: grayscale(0.4);
+  pointer-events: none;
+}
+
+/* Primary / confirm — ornate frame variant */
+body.appearance-skin-active .btn-primary,
+body.appearance-skin-active .modal-confirm-btn:not(.is-disabled),
+body.appearance-skin-active .chat-pane-send-btn--has-text-can-send,
+body.appearance-skin-active .app-header button.app-header-save-btn,
+body.appearance-skin-active header.app-header.glass-panel button.app-header-save-btn {
+  border-width: 5px !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/button-bg-with-frame.webp") 16 fill stretch !important;
+  color: var(--wc-amber-100) !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.45) !important;
+}
+
+/* Vim toggle — gold glow when active */
+body.appearance-skin-active .app-header button.app-header-vim-btn.is-active,
+body.appearance-skin-active header.app-header.glass-panel button.app-header-vim-btn.icon-btn.is-active {
+  color: var(--wc-amber-400) !important;
+  filter: brightness(1.15);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5), 0 3px 6px rgba(0, 0, 0, 0.55) !important;
+}
+
+body.appearance-skin-active .plugin-header-btn.is-active,
+body.appearance-skin-active .connection-status-btn.is-active {
+  color: var(--wc-amber-400) !important;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.45), 0 3px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Close button reads destructive */
+body.appearance-skin-active .window-control-btn.is-close {
+  filter: sepia(0.3) hue-rotate(-25deg) saturate(1.6);
+  color: #fecaca !important;
+}
+
+body.appearance-skin-active .window-control-btn.is-close:hover {
+  filter: sepia(0.3) hue-rotate(-25deg) saturate(2) brightness(1.25);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.55) !important;
+}
+
+body.appearance-skin-active .window-controls {
+  gap: 4px !important;
+}
+
+/* ── Tabs — warcraftcn Tabs (tab-list webp art) ────────────────── */
+
+body.appearance-skin-active .editor-tabs-shell,
+body.appearance-skin-active .editor-tab-bar-row {
+  background: rgba(12, 8, 3, 0.9) !important;
+  border-radius: 0 !important;
+  border-bottom: 2px solid rgba(154, 111, 47, 0.5) !important;
+}
+
+body.appearance-skin-active .editor-tab,
+body.appearance-skin-active .settings-view-header-tab,
+body.appearance-skin-active button.editor-tab,
+body.appearance-skin-active button.settings-view-header-tab {
+  border: none !important;
+  border-image: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list.webp") !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-family: var(--wc-font) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  box-shadow: none !important;
+  clip-path: none !important;
+}
+
+body.appearance-skin-active .editor-tab:hover,
+body.appearance-skin-active .settings-view-header-tab:hover {
+  filter: brightness(1.25);
+  color: #fff !important;
+}
+
+body.appearance-skin-active .editor-tab.is-active,
+body.appearance-skin-active .settings-view-header-tab.is-active,
+body.appearance-skin-active button.editor-tab.is-active {
+  z-index: 2;
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-active.webp") !important;
+  color: var(--wc-amber-100) !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+/* Settings left nav — vertical banner tabs */
+body.appearance-skin-active .settings-view-sidebar,
+body.appearance-skin-active .settings-view-sidebar-shell {
+  background: var(--wc-stone-deep) !important;
+}
+
+body.appearance-skin-active .settings-view-sidebar-tab,
+body.appearance-skin-active button.settings-view-sidebar-tab {
+  border: none !important;
+  border-image: none !important;
+  border-left: 3px solid transparent !important;
+  border-radius: 0 !important;
+  clip-path: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--wc-parchment-dim) !important;
+  font-family: var(--wc-font) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+}
+
+body.appearance-skin-active .settings-view-sidebar-tab:hover {
+  color: var(--wc-amber-100) !important;
+  background: rgba(212, 168, 83, 0.08) !important;
+}
+
+body.appearance-skin-active .settings-view-sidebar-tab.is-active {
+  color: var(--wc-amber-400) !important;
+  background:
+    linear-gradient(90deg, rgba(212, 168, 83, 0.18), transparent 80%) !important;
+  border-left-color: var(--wc-gold) !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+body.appearance-skin-active .settings-view-sidebar-tab--support:not(.is-active) {
+  background: rgba(212, 168, 83, 0.12) !important;
+  color: var(--wc-amber-400) !important;
+  border-left-color: var(--wc-gold) !important;
+}
+
+/* ── Inputs — warcraftcn Input / Textarea nine-slice ───────────── */
+
+body.appearance-skin-active input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body.appearance-skin-active .settings-input {
+  background: transparent !important;
+  border: 6px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/input-frame.webp") 16 fill stretch !important;
+  border-radius: 0 !important;
+  color: var(--wc-parchment) !important;
+  font-family: var(--wc-font) !important;
+  box-shadow: none !important;
+}
+
+body.appearance-skin-active textarea,
+body.appearance-skin-active .chat-pane-textarea {
+  background: transparent !important;
+  border: 6px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/textarea-bg.webp") 16 fill stretch !important;
+  border-radius: 0 !important;
+  color: var(--wc-parchment) !important;
+  box-shadow: none !important;
+}
+
+body.appearance-skin-active .chat-pane-input-box {
+  background: transparent !important;
+  border: 8px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/textarea-bg.webp") 16 fill stretch !important;
+  border-radius: 0 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.appearance-skin-active .chat-pane-input-box .chat-pane-textarea,
+body.appearance-skin-active .chat-pane-input-box textarea {
+  border: none !important;
+  border-image: none !important;
+  background: transparent !important;
+}
+
+body.appearance-skin-active input:focus,
+body.appearance-skin-active textarea:focus,
+body.appearance-skin-active .settings-input:focus,
+body.appearance-skin-active .chat-pane-input-box--focused {
+  outline: none !important;
+  filter: brightness(1.12) drop-shadow(0 0 6px rgba(251, 191, 36, 0.35));
+}
+
+body.appearance-skin-active input::placeholder,
+body.appearance-skin-active textarea::placeholder {
+  color: rgba(205, 185, 140, 0.55) !important;
+}
+
+body.appearance-skin-active select {
+  background: rgba(26, 18, 9, 0.95) !important;
+  border: 1px solid var(--wc-border-gold) !important;
+  border-radius: 4px !important;
+  color: var(--wc-parchment) !important;
+  font-family: var(--wc-font) !important;
+}
+
+/* ── Dropdown / context menus — warcraftcn DropdownMenu ────────── */
+
+body.appearance-skin-active .context-menu,
+body.appearance-skin-active .dropdown-menu,
+body.appearance-skin-active .ducky-editor-avatar-dropdown,
+body.appearance-skin-active .terminal-header-dropdown,
+body.appearance-skin-active .verse-problems-dropdown {
+  background: transparent !important;
+  border: 12px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/dropdown-menu-bg.webp") 12 fill stretch !important;
+  border-radius: 0 !important;
+  color: var(--wc-amber-100) !important;
+  font-family: var(--wc-font) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+  padding-bottom: 8px !important;
+}
+
+body.appearance-skin-active .context-menu button,
+body.appearance-skin-active .context-menu-item,
+body.appearance-skin-active .dropdown-menu-item {
+  background: transparent !important;
+  border: none !important;
+  border-image: none !important;
+  box-shadow: none !important;
+  color: var(--wc-amber-100) !important;
+  text-shadow: none;
+}
+
+body.appearance-skin-active .context-menu button:hover,
+body.appearance-skin-active .context-menu-item:hover,
+body.appearance-skin-active .dropdown-menu-item:hover {
+  background: rgba(120, 53, 15, 0.3) !important;
+  filter: none;
+  transform: none;
+}
+
+/* ── Sidebar — accordion headers + tree ────────────────────────── */
+
+body.appearance-skin-active .sidebar-section-header,
+body.appearance-skin-active .sidebar-section-header--stacked,
+body.appearance-skin-active .file-tree-section-header-row,
+body.appearance-skin-active .dock-rail-shell .sidebar-section-header {
+  position: relative;
+  background: transparent !important;
+  border: 6px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/accordion-header.webp") 16 fill stretch !important;
+  border-radius: 0 !important;
+  color: var(--wc-amber-100) !important;
+  font-family: var(--wc-font) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+body.appearance-skin-active .sidebar-section-header:hover,
+body.appearance-skin-active .sidebar-section-header--stacked:hover {
+  filter: brightness(1.2);
+}
+
+/* Sword bullet on section headers */
+body.appearance-skin-active .sidebar-section-header::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  background-image: url("/plugin-ui/warcraft/ui/assets/svg/sword.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) saturate(100%) invert(83%) sepia(38%) saturate(1148%) hue-rotate(349deg) brightness(102%) contrast(101%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+body.appearance-skin-active .sidebar-tree-row,
+body.appearance-skin-active .ducky-tree .sidebar-tree-row {
+  border-left: 2px solid transparent !important;
+  border-radius: 0 !important;
+  color: var(--wc-parchment);
+  font-family: var(--wc-font);
+}
+
+body.appearance-skin-active .sidebar-tree-row:hover {
+  background: rgba(120, 53, 15, 0.28) !important;
+  border-left-color: var(--wc-gold) !important;
+}
+
+body.appearance-skin-active .sidebar-tree-row.is-active,
+body.appearance-skin-active .sidebar-tree-row.is-selected {
+  background: rgba(146, 92, 20, 0.3) !important;
+  border-left-color: var(--wc-amber-400) !important;
+  color: var(--wc-amber-100) !important;
+}
+
+body.appearance-skin-active .sidebar-tree-children::before {
+  background: rgba(154, 111, 47, 0.5);
+}
+
+/* ── Labels — warcraftcn Label ─────────────────────────────────── */
+
+body.appearance-skin-active label,
+body.appearance-skin-active .settings-label,
+body.appearance-skin-active .settings-field-label {
+  color: var(--wc-amber-200) !important;
+  font-family: var(--wc-font) !important;
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.25);
+}
+
+/* ── Checkboxes — warcraftcn Checkbox (webp state art) ─────────── */
+
+body.appearance-skin-active input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 24px !important;
+  height: 24px !important;
+  border: 2px solid transparent !important;
+  border-radius: 4px !important;
+  background-color: transparent !important;
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-default.webp") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+body.appearance-skin-active input[type="checkbox"]:checked {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-default-checked.webp") !important;
+}
+
+body.appearance-skin-active input[type="checkbox"]:focus-visible {
+  outline: none !important;
+  border-color: hsl(45, 100%, 60%) !important;
+  box-shadow: 0 0 0 3px hsla(45, 100%, 60%, 0.4) !important;
+}
+
+body.appearance-skin-active input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Radios — warcraftcn RadioGroup gem socket ─────────────────── */
+
+body.appearance-skin-active input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  position: relative;
+  width: 22px !important;
+  height: 22px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: radial-gradient(
+    circle at 40% 35%,
+    hsl(35, 8%, 18%) 0%,
+    hsl(35, 6%, 10%) 70%,
+    hsl(35, 4%, 6%) 100%
+  ) !important;
+  box-shadow:
+    inset 0 1px 3px hsla(0, 0%, 0%, 0.6),
+    inset 0 -1px 1px hsla(35, 20%, 30%, 0.2),
+    0 0 0 1.5px hsl(35, 15%, 28%),
+    0 0 0 2.5px hsl(35, 10%, 15%) !important;
+  transition: box-shadow 0.2s ease;
+}
+
+body.appearance-skin-active input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 35%,
+    hsl(48, 100%, 78%) 0%,
+    hsl(43, 100%, 60%) 40%,
+    hsl(38, 90%, 45%) 75%,
+    hsl(30, 80%, 35%) 100%
+  );
+  box-shadow:
+    0 0 4px hsla(45, 100%, 55%, 0.8),
+    0 0 10px hsla(45, 100%, 50%, 0.4),
+    inset 0 -1px 2px hsla(30, 80%, 30%, 0.4),
+    inset 0 1px 1px hsla(50, 100%, 85%, 0.5);
+  animation: wc-gem-pulse 2.5s ease-in-out infinite;
+}
+
+body.appearance-skin-active input[type="radio"]:focus-visible {
+  outline: none !important;
+  box-shadow:
+    inset 0 1px 3px hsla(0, 0%, 0%, 0.6),
+    0 0 0 1.5px hsl(45, 70%, 50%),
+    0 0 0 3px hsla(45, 80%, 50%, 0.35),
+    0 0 12px hsla(45, 100%, 60%, 0.3) !important;
+}
+
+@keyframes wc-gem-pulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25) drop-shadow(0 0 6px hsla(45, 100%, 55%, 0.9));
+  }
+}
+
+/* ── Badges — warcraftcn Badge (frame plate) ───────────────────── */
+
+body.appearance-skin-active .icon-btn-badge,
+body.appearance-skin-active .store-update-dot {
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 40% 35%, #fde68a, #d4a853 60%, #8f6b24) !important;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.6);
+}
+
+body.appearance-skin-active .sps-file-badge,
+body.appearance-skin-active .tester-dock-badge,
+body.appearance-skin-active .terminal-header-badge,
+body.appearance-skin-active .file-history-item-badge,
+body.appearance-skin-active .context-usage-panel-agent-badge,
+body.appearance-skin-active .sps-pack-load-badge {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(120, 53, 15, 0.5) !important;
+  border-radius: 6px !important;
+  color: rgba(253, 230, 138, 0.85) !important;
+  font-family: var(--wc-font) !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+}
+
+/* ── Avatars — warcraftcn Avatar (gold ring; ornate frame via skin) ─ */
+
+body.appearance-skin-active .ducky-avatar,
+body.appearance-skin-active .chat-empty-state-chat-avatar,
+body.appearance-skin-active .ducky-profile-picker-avatar,
+body.appearance-skin-active .chat-shortcut-card-avatar-wrap {
+  border-radius: 50% !important;
+  box-shadow:
+    0 0 0 2px hsl(35, 15%, 15%),
+    0 0 0 3.5px var(--wc-border-gold),
+    0 0 10px rgba(212, 168, 83, 0.35) !important;
+}
+
+/* ── Tooltips / hover cards — warcraftcn Tooltip (rarity gold) ─── */
+
+body.appearance-skin-active .tooltip,
+body.appearance-skin-active [role="tooltip"],
+body.appearance-skin-active .editor-tab-hover-card {
+  background: linear-gradient(180deg, hsl(35, 15%, 8%) 0%, hsl(35, 10%, 5%) 100%) !important;
+  border: 1px solid hsl(45, 60%, 35%) !important;
+  border-radius: 4px !important;
+  color: var(--wc-amber-100) !important;
+  font-family: var(--wc-font) !important;
+  box-shadow:
+    inset 0 0 8px hsla(45, 50%, 25%, 0.12),
+    0 4px 20px hsla(0, 0%, 0%, 0.7) !important;
+}
+
+body.appearance-skin-active .editor-tab-hover-card-name {
+  color: var(--wc-amber-400) !important;
+  font-weight: 700 !important;
+}
+
+body.appearance-skin-active .editor-tab-hover-card-subtitle,
+body.appearance-skin-active .editor-tab-hover-card-path {
+  color: rgba(254, 243, 199, 0.7) !important;
+}
+
+/* Rarity accents reused for status colouring */
+body.appearance-skin-active .editor-tab-hover-card-status {
+  color: var(--wc-green) !important;
+}
+
+/* ── Spinners — warcraftcn summoning glyph ─────────────────────── */
+
+body.appearance-skin-active .sidebar-agent-spinner,
+body.appearance-skin-active .chat-pane-models-loading-spinner,
+body.appearance-skin-active .loading-spinner,
+body.appearance-skin-active .spinner {
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: rgb(52, 178, 108) !important;
+  -webkit-mask-image: url("/plugin-ui/warcraft/ui/assets/svg/spinner.svg") !important;
+  mask-image: url("/plugin-ui/warcraft/ui/assets/svg/spinner.svg") !important;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  animation: wc-glyph-pulse 2.6s linear infinite !important;
+}
+
+@keyframes wc-glyph-pulse {
+  0%, 100% {
+    opacity: 0.25;
+    filter: drop-shadow(0 0 2px rgba(52, 178, 108, 0.2));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(70, 206, 130, 0.6));
+  }
+}
+
+/* ── Skeletons — warcraftcn Skeleton shimmer ───────────────────── */
+
+body.appearance-skin-active .skeleton,
+body.appearance-skin-active [class*="-skeleton"] {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    hsl(35, 10%, 12%) 0%,
+    hsl(35, 8%, 18%) 50%,
+    hsl(35, 10%, 14%) 100%
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(35, 10%, 25%, 0.3),
+    inset 0 -1px 0 hsla(35, 10%, 8%, 0.5),
+    0 2px 8px hsla(0, 0%, 0%, 0.4) !important;
+}
+
+body.appearance-skin-active .skeleton::after,
+body.appearance-skin-active [class*="-skeleton"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsla(45, 100%, 50%, 0.08) 20%,
+    hsla(40, 100%, 60%, 0.15) 40%,
+    hsla(35, 100%, 55%, 0.2) 50%,
+    hsla(40, 100%, 60%, 0.15) 60%,
+    hsla(45, 100%, 50%, 0.08) 80%,
+    transparent 100%
+  );
+  animation: wc-shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes wc-shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+/* ── Status bar ────────────────────────────────────────────────── */
+
+body.appearance-skin-active .app-status-bar,
+body.appearance-skin-active .status-bar,
+body.appearance-skin-active .settings-view-sidebar-footer {
+  position: relative;
+  background: linear-gradient(180deg, hsl(35, 15%, 9%) 0%, hsl(35, 18%, 5%) 100%) !important;
+  border-top: 2px solid #000 !important;
+  color: var(--wc-parchment-dim) !important;
+  font-family: var(--wc-font) !important;
+  font-size: 10px !important;
+}
+
+body.appearance-skin-active .app-status-bar::before,
+body.appearance-skin-active .status-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 168, 83, 0.5) 30%,
+    rgba(212, 168, 83, 0.5) 70%,
+    transparent
+  );
+  box-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
+}
+
+/* ── Scrollbars — carved gold handles ──────────────────────────── */
+
+body.appearance-skin-active ::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+body.appearance-skin-active ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+body.appearance-skin-active ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8f6b24, #5c431a) !important;
+  border: 1px solid #2c2113;
+  border-radius: 4px;
+}
+
+body.appearance-skin-active ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d4a853, #8f6b24) !important;
+}
+
+/* ── Selection / focus ─────────────────────────────────────────── */
+
+body.appearance-skin-active ::selection {
+  background: rgba(212, 168, 83, 0.4);
+  color: #fff;
+}
+
+body.appearance-skin-active :focus-visible {
+  outline: 1px solid var(--wc-gold) !important;
+  outline-offset: 1px;
+}
+
+body.appearance-skin-active .sidebar-resize-handle:hover,
+body.appearance-skin-active .sidebar-resize-handle.is-dragging,
+body.appearance-skin-active .chat-column-resize-handle:hover,
+body.appearance-skin-active .chat-column-resize-handle.is-dragging,
+body.appearance-skin-active .settings-view-sidebar-resize-handle:hover,
+body.appearance-skin-active .settings-view-sidebar-resize-handle.is-dragging,
+body.appearance-skin-active .dock-rail-resize-handle:hover {
+  background: rgba(212, 168, 83, 0.45) !important;
+}
+
+/* ── FACTION VARIANTS (skin.js sets body[data-wc-faction]) ─────── */
+
+/* Human / Alliance */
+body.appearance-skin-active[data-wc-faction="human"],
+body.appearance-skin-active[data-wc-faction="human"] * {
+  cursor: url("/plugin-ui/warcraft/ui/assets/cursors/human.cur"), auto;
+}
+
+body.appearance-skin-active[data-wc-faction="human"] input[type="checkbox"] {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-human.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="human"] input[type="checkbox"]:checked {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-human-checked.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="human"] .editor-tab,
+body.appearance-skin-active[data-wc-faction="human"] .settings-view-header-tab {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-human.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="human"] .editor-tab.is-active,
+body.appearance-skin-active[data-wc-faction="human"] .settings-view-header-tab.is-active {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-active-human.webp") !important;
+}
+
+/* Orc / Horde */
+body.appearance-skin-active[data-wc-faction="orc"],
+body.appearance-skin-active[data-wc-faction="orc"] * {
+  cursor: url("/plugin-ui/warcraft/ui/assets/cursors/orc.cur"), auto;
+}
+
+body.appearance-skin-active[data-wc-faction="orc"] input[type="checkbox"] {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-orc.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="orc"] input[type="checkbox"]:checked {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-orc-checked.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="orc"] .editor-tab,
+body.appearance-skin-active[data-wc-faction="orc"] .settings-view-header-tab {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-orc.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="orc"] .editor-tab.is-active,
+body.appearance-skin-active[data-wc-faction="orc"] .settings-view-header-tab.is-active {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-active-orc.webp") !important;
+}
+
+/* Night Elf */
+body.appearance-skin-active[data-wc-faction="elf"],
+body.appearance-skin-active[data-wc-faction="elf"] * {
+  cursor: url("/plugin-ui/warcraft/ui/assets/cursors/elf.cur"), auto;
+}
+
+body.appearance-skin-active[data-wc-faction="elf"] input[type="checkbox"] {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-elf.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="elf"] input[type="checkbox"]:checked {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-elf-checked.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="elf"] .editor-tab,
+body.appearance-skin-active[data-wc-faction="elf"] .settings-view-header-tab {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-elf.webp") !important;
+  color: rgba(20, 25, 20, 0.92) !important;
+  text-shadow: none;
+}
+body.appearance-skin-active[data-wc-faction="elf"] .editor-tab.is-active,
+body.appearance-skin-active[data-wc-faction="elf"] .settings-view-header-tab.is-active {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-active-elf.webp") !important;
+}
+
+/* Undead */
+body.appearance-skin-active[data-wc-faction="undead"],
+body.appearance-skin-active[data-wc-faction="undead"] * {
+  cursor: url("/plugin-ui/warcraft/ui/assets/cursors/undead.cur"), auto;
+}
+
+body.appearance-skin-active[data-wc-faction="undead"] input[type="checkbox"] {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-undead.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="undead"] input[type="checkbox"]:checked {
+  background-image: url("/plugin-ui/warcraft/ui/assets/checkbox-undead-checked.webp") !important;
+}
+body.appearance-skin-active[data-wc-faction="undead"] .editor-tab,
+body.appearance-skin-active[data-wc-faction="undead"] .settings-view-header-tab {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-undead.webp") !important;
+  color: rgba(28, 22, 34, 0.92) !important;
+  text-shadow: none;
+}
+body.appearance-skin-active[data-wc-faction="undead"] .editor-tab.is-active,
+body.appearance-skin-active[data-wc-faction="undead"] .settings-view-header-tab.is-active {
+  background-image: url("/plugin-ui/warcraft/ui/assets/tabs/tab-list-active-undead.webp") !important;
+}
+
+/* Faction skeleton tints */
+body.appearance-skin-active[data-wc-faction="orc"] .skeleton,
+body.appearance-skin-active[data-wc-faction="orc"] [class*="-skeleton"] {
+  background: linear-gradient(135deg, hsl(0, 30%, 12%) 0%, hsl(10, 25%, 18%) 50%, hsl(0, 30%, 14%) 100%) !important;
+}
+body.appearance-skin-active[data-wc-faction="elf"] .skeleton,
+body.appearance-skin-active[data-wc-faction="elf"] [class*="-skeleton"] {
+  background: linear-gradient(135deg, hsl(170, 35%, 12%) 0%, hsl(175, 30%, 18%) 50%, hsl(170, 35%, 14%) 100%) !important;
+}
+body.appearance-skin-active[data-wc-faction="human"] .skeleton,
+body.appearance-skin-active[data-wc-faction="human"] [class*="-skeleton"] {
+  background: linear-gradient(135deg, hsl(220, 40%, 15%) 0%, hsl(225, 35%, 20%) 50%, hsl(220, 40%, 17%) 100%) !important;
+}
+body.appearance-skin-active[data-wc-faction="undead"] .skeleton,
+body.appearance-skin-active[data-wc-faction="undead"] [class*="-skeleton"] {
+  background: linear-gradient(135deg, hsl(270, 25%, 10%) 0%, hsl(275, 20%, 15%) 50%, hsl(270, 25%, 12%) 100%) !important;
+}
+
+/* ── Pagination (generic, warcraftcn Pagination look) ──────────── */
+
+body.appearance-skin-active .pagination button,
+body.appearance-skin-active .pagination-link,
+body.appearance-skin-active .store-pagination button {
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border: 5px solid transparent !important;
+  border-image: url("/plugin-ui/warcraft/ui/assets/button-bg-with-frame-sm.webp") 16 fill stretch !important;
+  color: rgba(254, 243, 199, 0.7) !important;
+  font-weight: 700 !important;
+}
+
+body.appearance-skin-active .pagination button.is-active,
+body.appearance-skin-active .pagination-link.is-active {
+  color: var(--wc-amber-200) !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+  filter: brightness(1.1);
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  body.appearance-skin-active input[type="radio"]:checked::after,
+  body.appearance-skin-active .skeleton::after,
+  body.appearance-skin-active [class*="-skeleton"]::after,
+  body.appearance-skin-active .sidebar-agent-spinner,
+  body.appearance-skin-active .chat-pane-models-loading-spinner,
+  body.appearance-skin-active .loading-spinner,
+  body.appearance-skin-active .spinner {
+    animation: none !important;
+  }
+}

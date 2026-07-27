@@ -1,0 +1,370 @@
+{
+  "id": "warcraft",
+  "kind": "plugin",
+  "version": "1.0.9",
+  "label": "Warcraft",
+  "description": "Fantasy RTS war-room \u2014 carved gold frames, parchment panels, gem radios, scroll toasts, faction cursors. Powered by warcraftcn-ui (MIT).",
+  "min_app_version": "1.0.463",
+  "default_enabled": false,
+  "secret_keys": [],
+  "contributes": {
+    "appearance.profiles": [
+      {
+        "id": "warcraft",
+        "name": "Warcraft",
+        "foundation": {
+          "accent": "#d4a853",
+          "bg": "#171006",
+          "surface": "#241a10",
+          "text": "#f3e7c4",
+          "border": "#8f6b24"
+        },
+        "overrides": {
+          "fg": "#f3e7c4",
+          "fg-dim": "#cdb98c",
+          "muted": "#9a865c",
+          "bg-panel": "rgba(26, 18, 9, 0.94)",
+          "bg-elevated": "#2c2113",
+          "sidebar": "#1a1209",
+          "card": "#211709",
+          "card-hover": "#2c2113",
+          "panel-header": "#2c2113",
+          "btn-bg": "#2c2113",
+          "btn-hover": "#3d2e1a",
+          "btn-pressed": "#1a1209",
+          "dropdown-bg": "#241a10",
+          "border-light": "#b98a3a",
+          "border-focus": "#fbbf24",
+          "blue": "#5a8ac4",
+          "amber": "#fbbf24",
+          "green": "#4ade80",
+          "red": "#ef4444",
+          "accent": "#d4a853",
+          "accent-hover": "#e8c06a",
+          "select": "#5c431a",
+          "font-ui": "\"Cinzel\", Georgia, \"Times New Roman\", serif",
+          "font-mono": "Consolas, \"Cascadia Mono\", monospace",
+          "radius": "6px",
+          "radius-sm": "4px"
+        },
+        "status_overrides": {
+          "success": {
+            "bg": "#0c2812",
+            "border": "#4ade80",
+            "text": "#86efac"
+          },
+          "warn": {
+            "bg": "#3d2703",
+            "border": "#fbbf24",
+            "text": "#fcd34d"
+          },
+          "error": {
+            "bg": "#3d0a0a",
+            "border": "#ef4444",
+            "text": "#fca5a5"
+          },
+          "info": {
+            "bg": "#12233d",
+            "border": "#5a8ac4",
+            "text": "#93c5fd"
+          }
+        }
+      },
+      {
+        "id": "alliance",
+        "name": "Warcraft \u2014 Alliance",
+        "foundation": {
+          "accent": "#5a8ac4",
+          "bg": "#0d1524",
+          "surface": "#16233a",
+          "text": "#e7edf7",
+          "border": "#3a5a8a"
+        },
+        "overrides": {
+          "fg": "#e7edf7",
+          "fg-dim": "#aebfd9",
+          "muted": "#7a8cad",
+          "bg-panel": "rgba(11, 18, 32, 0.94)",
+          "bg-elevated": "#1c2b46",
+          "sidebar": "#0f1828",
+          "card": "#121e33",
+          "card-hover": "#1c2b46",
+          "panel-header": "#1c2b46",
+          "btn-bg": "#1c2b46",
+          "btn-hover": "#28395c",
+          "btn-pressed": "#0f1828",
+          "dropdown-bg": "#16233a",
+          "border-light": "#5a8ac4",
+          "border-focus": "#8ab4f0",
+          "blue": "#5a8ac4",
+          "amber": "#e8c06a",
+          "green": "#4ade80",
+          "red": "#ef4444",
+          "accent": "#5a8ac4",
+          "accent-hover": "#7ba6da",
+          "select": "#254069",
+          "font-ui": "\"Cinzel\", Georgia, \"Times New Roman\", serif",
+          "font-mono": "Consolas, \"Cascadia Mono\", monospace",
+          "radius": "6px",
+          "radius-sm": "4px"
+        },
+        "status_overrides": {
+          "success": {
+            "bg": "#0c2812",
+            "border": "#4ade80",
+            "text": "#86efac"
+          },
+          "warn": {
+            "bg": "#3d2703",
+            "border": "#e8c06a",
+            "text": "#fcd34d"
+          },
+          "error": {
+            "bg": "#3d0a0a",
+            "border": "#ef4444",
+            "text": "#fca5a5"
+          },
+          "info": {
+            "bg": "#12233d",
+            "border": "#5a8ac4",
+            "text": "#93c5fd"
+          }
+        }
+      },
+      {
+        "id": "horde",
+        "name": "Warcraft \u2014 Horde",
+        "foundation": {
+          "accent": "#d4624a",
+          "bg": "#1c0e08",
+          "surface": "#2c1610",
+          "text": "#f7e7dd",
+          "border": "#8a3a2a"
+        },
+        "overrides": {
+          "fg": "#f7e7dd",
+          "fg-dim": "#d9b3a3",
+          "muted": "#a87d6c",
+          "bg-panel": "rgba(28, 13, 8, 0.94)",
+          "bg-elevated": "#3a1d13",
+          "sidebar": "#200f09",
+          "card": "#28130c",
+          "card-hover": "#3a1d13",
+          "panel-header": "#3a1d13",
+          "btn-bg": "#3a1d13",
+          "btn-hover": "#4f281a",
+          "btn-pressed": "#200f09",
+          "dropdown-bg": "#2c1610",
+          "border-light": "#c4674a",
+          "border-focus": "#f08a6a",
+          "blue": "#5a8ac4",
+          "amber": "#e8a05a",
+          "green": "#4ade80",
+          "red": "#d4624a",
+          "accent": "#d4624a",
+          "accent-hover": "#e8836a",
+          "select": "#5c2a1a",
+          "font-ui": "\"Cinzel\", Georgia, \"Times New Roman\", serif",
+          "font-mono": "Consolas, \"Cascadia Mono\", monospace",
+          "radius": "6px",
+          "radius-sm": "4px"
+        },
+        "status_overrides": {
+          "success": {
+            "bg": "#0c2812",
+            "border": "#4ade80",
+            "text": "#86efac"
+          },
+          "warn": {
+            "bg": "#3d2703",
+            "border": "#e8a05a",
+            "text": "#fcd34d"
+          },
+          "error": {
+            "bg": "#3d0a0a",
+            "border": "#d4624a",
+            "text": "#fca5a5"
+          },
+          "info": {
+            "bg": "#12233d",
+            "border": "#5a8ac4",
+            "text": "#93c5fd"
+          }
+        }
+      },
+      {
+        "id": "elf",
+        "name": "Warcraft \u2014 Night Elf",
+        "foundation": {
+          "accent": "#5aaaa5",
+          "bg": "#081614",
+          "surface": "#10241f",
+          "text": "#ddf2ec",
+          "border": "#2a6a5f"
+        },
+        "overrides": {
+          "fg": "#ddf2ec",
+          "fg-dim": "#a3d1c6",
+          "muted": "#6ca196",
+          "bg-panel": "rgba(7, 20, 17, 0.94)",
+          "bg-elevated": "#153029",
+          "sidebar": "#0a1a16",
+          "card": "#0d1f1a",
+          "card-hover": "#153029",
+          "panel-header": "#153029",
+          "btn-bg": "#153029",
+          "btn-hover": "#1e4238",
+          "btn-pressed": "#0a1a16",
+          "dropdown-bg": "#10241f",
+          "border-light": "#4a9a8f",
+          "border-focus": "#6ad4c6",
+          "blue": "#5a8ac4",
+          "amber": "#e8c06a",
+          "green": "#5aaaa5",
+          "red": "#ef4444",
+          "accent": "#5aaaa5",
+          "accent-hover": "#7ac4bd",
+          "select": "#1e4a42",
+          "font-ui": "\"Cinzel\", Georgia, \"Times New Roman\", serif",
+          "font-mono": "Consolas, \"Cascadia Mono\", monospace",
+          "radius": "6px",
+          "radius-sm": "4px"
+        },
+        "status_overrides": {
+          "success": {
+            "bg": "#0c2812",
+            "border": "#5aaaa5",
+            "text": "#99e6dc"
+          },
+          "warn": {
+            "bg": "#3d2703",
+            "border": "#e8c06a",
+            "text": "#fcd34d"
+          },
+          "error": {
+            "bg": "#3d0a0a",
+            "border": "#ef4444",
+            "text": "#fca5a5"
+          },
+          "info": {
+            "bg": "#12233d",
+            "border": "#5a8ac4",
+            "text": "#93c5fd"
+          }
+        }
+      },
+      {
+        "id": "undead",
+        "name": "Warcraft \u2014 Undead",
+        "foundation": {
+          "accent": "#a68ac4",
+          "bg": "#120a1c",
+          "surface": "#1e1230",
+          "text": "#ece2f7",
+          "border": "#5a3a8a"
+        },
+        "overrides": {
+          "fg": "#ece2f7",
+          "fg-dim": "#c3aed9",
+          "muted": "#8d78a8",
+          "bg-panel": "rgba(16, 8, 26, 0.94)",
+          "bg-elevated": "#281940",
+          "sidebar": "#150c22",
+          "card": "#1a0f2b",
+          "card-hover": "#281940",
+          "panel-header": "#281940",
+          "btn-bg": "#281940",
+          "btn-hover": "#362254",
+          "btn-pressed": "#150c22",
+          "dropdown-bg": "#1e1230",
+          "border-light": "#8a6ab4",
+          "border-focus": "#b494e0",
+          "blue": "#5a8ac4",
+          "amber": "#e8c06a",
+          "green": "#4ade80",
+          "red": "#ef4444",
+          "accent": "#a68ac4",
+          "accent-hover": "#bfa5da",
+          "select": "#3d2a5c",
+          "font-ui": "\"Cinzel\", Georgia, \"Times New Roman\", serif",
+          "font-mono": "Consolas, \"Cascadia Mono\", monospace",
+          "radius": "6px",
+          "radius-sm": "4px"
+        },
+        "status_overrides": {
+          "success": {
+            "bg": "#0c2812",
+            "border": "#4ade80",
+            "text": "#86efac"
+          },
+          "warn": {
+            "bg": "#3d2703",
+            "border": "#e8c06a",
+            "text": "#fcd34d"
+          },
+          "error": {
+            "bg": "#3d0a0a",
+            "border": "#ef4444",
+            "text": "#fca5a5"
+          },
+          "info": {
+            "bg": "#1e1230",
+            "border": "#a68ac4",
+            "text": "#d3bdf0"
+          }
+        }
+      }
+    ],
+    "appearance.skin": [
+      {
+        "id": "warcraft",
+        "label": "Warcraft",
+        "entry": "ui/skin.js",
+        "css": "ui/skin.css"
+      }
+    ],
+    "appearance.css": [
+      {
+        "entry": "ui/theme.css"
+      }
+    ],
+    "appearance.effects": [
+      {
+        "id": "embers",
+        "label": "Golden embers",
+        "entry": "ui/embers.js"
+      }
+    ],
+    "sounds": [
+      {
+        "id": "click",
+        "label": "Stone click",
+        "file": "ui/sounds/click.wav"
+      },
+      {
+        "id": "scroll",
+        "label": "Parchment scroll",
+        "file": "ui/sounds/scroll.wav"
+      }
+    ],
+    "walkthrough": {
+      "id": "warcraft",
+      "title": "Warcraft theme",
+      "auto_start": "first_enable",
+      "settings_tab": "Appearance",
+      "steps": [
+        {
+          "target": "settings.tab.appearance",
+          "title": "Appearance",
+          "body": "This theme is available in Appearance. Press Appearance, then pick Warcraft for the fantasy war-room chrome.",
+          "advance": "require_click",
+          "mode": "rect"
+        }
+      ]
+    }
+  },
+  "backend": {
+    "entry": "backend",
+    "register": "register"
+  }
+}
