@@ -1,9 +1,9 @@
 {
   "id": "warcraft",
   "kind": "plugin",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "label": "Warcraft",
-  "description": "Fantasy RTS war-room \u2014 carved gold frames, parchment panels, gem radios, scroll toasts, faction cursors. Powered by warcraftcn-ui (MIT).",
+  "description": "Fantasy RTS war-room — carved gold frames, parchment panels, gem radios, scroll toasts, faction cursors. Powered by warcraftcn-ui (MIT).",
   "min_app_version": "1.0.463",
   "default_enabled": false,
   "secret_keys": [],
@@ -72,7 +72,7 @@
       },
       {
         "id": "alliance",
-        "name": "Warcraft \u2014 Alliance",
+        "name": "Warcraft — Alliance",
         "foundation": {
           "accent": "#5a8ac4",
           "bg": "#0d1524",
@@ -133,7 +133,7 @@
       },
       {
         "id": "horde",
-        "name": "Warcraft \u2014 Horde",
+        "name": "Warcraft — Horde",
         "foundation": {
           "accent": "#d4624a",
           "bg": "#1c0e08",
@@ -194,7 +194,7 @@
       },
       {
         "id": "elf",
-        "name": "Warcraft \u2014 Night Elf",
+        "name": "Warcraft — Night Elf",
         "foundation": {
           "accent": "#5aaaa5",
           "bg": "#081614",
@@ -255,7 +255,7 @@
       },
       {
         "id": "undead",
-        "name": "Warcraft \u2014 Undead",
+        "name": "Warcraft — Undead",
         "foundation": {
           "accent": "#a68ac4",
           "bg": "#120a1c",
