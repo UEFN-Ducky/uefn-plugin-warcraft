@@ -6,6 +6,7 @@
   "description": "Fantasy RTS war-room — carved gold frames, parchment panels, gem radios, scroll toasts, faction cursors. Powered by warcraftcn-ui (MIT).",
   "min_app_version": "1.0.463",
   "default_enabled": false,
+  "data_sharing": false,
   "secret_keys": [],
   "contributes": {
     "appearance.profiles": [
