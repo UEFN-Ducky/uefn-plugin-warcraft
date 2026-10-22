@@ -1,7 +1,7 @@
 {
   "id": "warcraft",
   "kind": "plugin",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "label": "Warcraft",
   "description": "Fantasy RTS war-room — carved gold frames, parchment panels, gem radios, scroll toasts, faction cursors. Powered by warcraftcn-ui (MIT).",
   "min_app_version": "1.0.463",
